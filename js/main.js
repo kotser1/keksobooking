@@ -2,6 +2,12 @@
 
 const OFFERS_COUNT = 10;
 const AVATAR_COUNT = 8;
+const TYPES = ['palace', 'flat', 'house', 'bungalow'];
+const CHECKINS = ['12:00', '13:00', '14:00'];
+const CHECKOUTS = ['12:00', '13:00', '14:00'];
+const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+const ADDRESS_MAX = 100;
 
 const Price = {
   MIN: 100,
@@ -18,17 +24,17 @@ const Guest = {
   MAX: 10,
 };
 
+const LocationX = {
+  MIN: 35.65000,
+  MAX: 35.70000,
+}
+
+const LocationY = {
+  MIN: 139.70000,
+  MAX: 139.80000,
+}
+
 let offers = [];
-
-const types = ['palace', 'flat', 'house', 'bungalow'];
-
-const checkins = ['12:00', '13:00', '14:00'];
-
-const checkouts = ['12:00', '13:00', '14:00'];
-
-const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-
-const photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
 const getRandomNumber = (min, max, digit = 0) => {
   if (min < 0 || max < 0) {
@@ -62,20 +68,20 @@ const addOffers = () => {
       },
       offer: {
         title: 'Случайный заголовок',
-        address: getRandomNumber(1, 600) + ', ' + getRandomNumber(1, 600),
+        address: getRandomNumber(1, ADDRESS_MAX) + ', ' + getRandomNumber(1, ADDRESS_MAX),
         price: getRandomNumber(Price.MIN, Price.MAX),
-        type: getRandomArrayElement(types),
+        type: getRandomArrayElement(TYPES),
         rooms: getRandomNumber(Room.MIN, Room.MAX),
         guests: getRandomNumber(Guest.MIN, Guest.MAX),
-        checkin: getRandomArrayElement(checkins),
-        checkout: getRandomArrayElement(checkouts),
-        features: shuffleArray(features).slice(0, getRandomNumber(1, features.length)),
+        checkin: getRandomArrayElement(CHECKINS),
+        checkout: getRandomArrayElement(CHECKOUTS),
+        features: shuffleArray(FEATURES).slice(0, getRandomNumber(1, FEATURES.length)),
         description: 'Случайное описание',
-        photos: getRandomArrayElement(photos),
+        photos: getRandomArrayElement(PHOTOS),
       },
       location: {
-        x: getRandomNumber(35.65000, 35.70000, 5),
-        y: getRandomNumber(139.70000, 139.80000, 5),
+        x: getRandomNumber(LocationX.MIN, LocationX.MAX, 5),
+        y: getRandomNumber(LocationY.MIN, LocationY.MAX, 5),
       },
     })
   }
