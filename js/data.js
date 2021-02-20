@@ -2,7 +2,14 @@ import {getRandomNumber, getRandomArrayElement, shuffleArray} from './util.js';
 
 const OFFERS_COUNT = 10;
 const AVATAR_COUNT = 8;
-const TYPES = ['palace', 'flat', 'house', 'bungalow'];
+
+const TYPES = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало',
+};
+
 const CHECKINS = ['12:00', '13:00', '14:00'];
 const CHECKOUTS = ['12:00', '13:00', '14:00'];
 const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -48,14 +55,14 @@ const addOffers = () => {
         title: 'Случайный заголовок',
         address: getRandomNumber(1, ADDRESS_MAX) + ', ' + getRandomNumber(1, ADDRESS_MAX),
         price: getRandomNumber(Price.MIN, Price.MAX),
-        type: getRandomArrayElement(TYPES),
+        type: getRandomArrayElement(Object.keys(TYPES)),
         rooms: getRandomNumber(Room.MIN, Room.MAX),
         guests: getRandomNumber(Guest.MIN, Guest.MAX),
         checkin: getRandomArrayElement(CHECKINS),
         checkout: getRandomArrayElement(CHECKOUTS),
         features: shuffleArray(FEATURES).slice(0, getRandomNumber(1, FEATURES.length)),
         description: 'Случайное описание',
-        photos: getRandomArrayElement(PHOTOS),
+        photos: shuffleArray(PHOTOS).slice(0, getRandomNumber(1, PHOTOS.length)),
       },
       location: {
         x: getRandomNumber(LocationX.MIN, LocationX.MAX, 5),
@@ -66,3 +73,5 @@ const addOffers = () => {
 };
 
 addOffers();
+
+export {offers, TYPES};
