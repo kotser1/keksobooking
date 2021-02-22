@@ -1,5 +1,5 @@
-import {offers, TYPES} from './data.js';
-import {numDecline} from './util.js';
+import { offers, TYPES } from './data.js';
+import { numDecline } from './util.js';
 
 const mapBox = document.querySelector('.map__canvas');
 const cardTemplate = document.querySelector('#card').content;
@@ -23,8 +23,8 @@ const renderPhotos = (photoArray, container) => {
     let picture = document.createElement('img');
     picture.classList.add('popup__photo');
     picture.src = photoArray[i];
-    picture.setAttribute('width', '45');
-    picture.setAttribute('height', '40');
+    picture.width = '45';
+    picture.height = '40';
     picture.alt = 'Фотография жилья';
     container.appendChild(picture);
   }
