@@ -34,12 +34,12 @@ const Guest = {
 const LocationX = {
   MIN: 35.65000,
   MAX: 35.70000,
-}
+};
 
 const LocationY = {
   MIN: 139.70000,
   MAX: 139.80000,
-}
+};
 
 let offers = [];
 
