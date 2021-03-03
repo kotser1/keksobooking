@@ -107,4 +107,4 @@ const makeElements = (item) => {
   mapBox.appendChild(popupElement);
 };
 
-makeElements(offers[0]);
+export {makeElements};
