@@ -7,8 +7,8 @@ const MAP_LNG = 139.76722;
 const MAP_ZOOM = 13;
 const PIN_SIZE = [50, 50];
 const PIN_ANCHOR = [25, 50];
-const MAIN_PIN_URL = '../img/main-pin.svg';
-const OFFER_PIN_URL = '../img/pin.svg';
+const MAIN_PIN_URL = './img/main-pin.svg';
+const OFFER_PIN_URL = './img/pin.svg';
 
 const address = document.querySelector('#address');
 const disabledFields = document.querySelectorAll('select.map__filter, fieldset');
