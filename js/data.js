@@ -15,6 +15,7 @@ const CHECKOUTS = ['12:00', '13:00', '14:00'];
 const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 const ADDRESS_MAX = 100;
+const DIGITS_AFTER_COMMA = 5;
 
 const Price = {
   MIN: 100,
@@ -65,8 +66,8 @@ const addOffers = () => {
         photos: shuffleArray(PHOTOS).slice(0, getRandomNumber(1, PHOTOS.length)),
       },
       location: {
-        x: getRandomNumber(LocationX.MIN, LocationX.MAX, 5),
-        y: getRandomNumber(LocationY.MIN, LocationY.MAX, 5),
+        x: getRandomNumber(LocationX.MIN, LocationX.MAX, DIGITS_AFTER_COMMA),
+        y: getRandomNumber(LocationY.MIN, LocationY.MAX, DIGITS_AFTER_COMMA),
       },
     })
   }
@@ -74,4 +75,4 @@ const addOffers = () => {
 
 addOffers();
 
-export {offers, TYPES};
+export {offers, TYPES, DIGITS_AFTER_COMMA};
