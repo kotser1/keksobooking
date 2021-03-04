@@ -1,7 +1,6 @@
-import { offers, TYPES } from './data.js';
+import { TYPES } from './data.js';
 import { numDecline } from './util.js';
 
-const mapBox = document.querySelector('.map__canvas');
 const cardTemplate = document.querySelector('#card').content;
 const popupTemplate = cardTemplate.querySelector('.popup');
 
@@ -104,7 +103,7 @@ const makeElements = (item) => {
     popupAvatar.remove();
   }
 
-  mapBox.appendChild(popupElement);
+  return popupElement;
 };
 
-makeElements(offers[0]);
+export {makeElements};
