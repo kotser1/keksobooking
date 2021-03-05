@@ -91,10 +91,10 @@ const validateRooms = () => {
   });
 };
 
-const onRoomNumberChange = () => {
+const onSelectRoomsChange = () => {
   validateRooms();
 };
 
 validateRooms();
 
-selectRooms.addEventListener('change', onRoomNumberChange);
+selectRooms.addEventListener('change', onSelectRoomsChange);
