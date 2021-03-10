@@ -1,10 +1,10 @@
 /* global L:readonly */
 import {makeElements} from './make-elements.js';
-import {offers, DIGITS_AFTER_COMMA} from './data.js';
+import {DIGITS_AFTER_COMMA} from './data.js';
 
 const MAP_LAT = 35.68034;
 const MAP_LNG = 139.76722;
-const MAP_ZOOM = 13;
+const MAP_ZOOM = 9;
 const PIN_SIZE = [50, 50];
 const PIN_ANCHOR = [25, 50];
 const MAIN_PIN_URL = './img/main-pin.svg';
@@ -68,22 +68,27 @@ mainPinMarker.on('moveend', (evt) => {
   address.value = evt.target.getLatLng().lat.toFixed(DIGITS_AFTER_COMMA)  + ', ' + evt.target.getLatLng().lng.toFixed(DIGITS_AFTER_COMMA);
 });
 
-offers.forEach((item) => {
-  const offerPinIcon = L.icon({
-    iconUrl: OFFER_PIN_URL,
-    iconSize: PIN_SIZE,
-    iconAnchor: PIN_ANCHOR,
+const renderElements = (similarOffers) => {
+
+  similarOffers.forEach((item) => {
+    const offerPinIcon = L.icon({
+      iconUrl: OFFER_PIN_URL,
+      iconSize: PIN_SIZE,
+      iconAnchor: PIN_ANCHOR,
+    });
+
+    const marker = L.marker(
+      {
+        lat: item.location.lat,
+        lng: item.location.lng,
+      },
+      {
+        icon: offerPinIcon,
+      },
+    );
+
+    marker.addTo(map).bindPopup(makeElements(item));
   });
+};
 
-  const marker = L.marker(
-    {
-      lat: item.location.x,
-      lng: item.location.y,
-    },
-    {
-      icon: offerPinIcon,
-    },
-  );
-
-  marker.addTo(map).bindPopup(makeElements(item));
-});
+export {renderElements};
