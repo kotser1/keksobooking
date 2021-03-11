@@ -1,5 +1,5 @@
 import { sendData } from './api.js';
-import { numDecline, showAlert, showOkMessage } from './util.js';
+import { numDecline, showErrorMessage, showSuccessMessage} from './util.js';
 
 const offerForm = document.querySelector('.ad-form');
 const checkinTime = offerForm.querySelector('#timein');
@@ -105,9 +105,8 @@ const setUserFormSubmit = () => {
     evt.preventDefault();
 
     sendData(
-      // () => onSuccess(),
-      () => showOkMessage('Форма успешно отправлена!'),
-      () => showAlert('Не удалось отправить форму. Попробуйте еще раз'),
+      () => showSuccessMessage(),
+      () => showErrorMessage(),
       new FormData(evt.target),
     );
   });
