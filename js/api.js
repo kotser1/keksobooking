@@ -1,7 +1,7 @@
 import {renderElements} from './map.js';
 import {showAlert} from './util.js';
 
-fetch('https://22.javascript.pages.academy/keksobooking/data222')
+fetch('https://22.javascript.pages.academy/keksobooking/data')
   .then((response) => response.json())
   .then((homes) => {
     renderElements(homes);
