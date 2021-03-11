@@ -1,4 +1,5 @@
-import { numDecline } from './util.js';
+import { sendData } from './api.js';
+import { numDecline, showAlert, showOkMessage } from './util.js';
 
 const offerForm = document.querySelector('.ad-form');
 const checkinTime = offerForm.querySelector('#timein');
@@ -98,3 +99,18 @@ const onSelectRoomsChange = () => {
 validateRooms();
 
 selectRooms.addEventListener('change', onSelectRoomsChange);
+
+const setUserFormSubmit = () => {
+  offerForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      // () => onSuccess(),
+      () => showOkMessage('Форма успешно отправлена!'),
+      () => showAlert('Не удалось отправить форму. Попробуйте еще раз'),
+      new FormData(evt.target),
+    );
+  });
+};
+
+export {setUserFormSubmit};
