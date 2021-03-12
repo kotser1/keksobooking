@@ -47,6 +47,7 @@ const mainPinIcon = L.icon({
   iconAnchor: PIN_ANCHOR,
 });
 
+
 const mainPinMarker = L.marker(
   {
     lat: MAP_LAT,
@@ -61,7 +62,12 @@ const mainPinMarker = L.marker(
 mainPinMarker.addTo(map);
 
 //Устанавливаем значение по умолчанию для поля 'Адрес'
-address.value = MAP_LAT + ', ' + MAP_LNG;
+const setDefaultAdress = () => {
+  address.value = MAP_LAT + ', ' + MAP_LNG;
+};
+
+setDefaultAdress();
+
 
 //Передаем текущие координаты маркера в поле 'Адрес'
 mainPinMarker.on('moveend', (evt) => {
@@ -91,4 +97,9 @@ const renderElements = (similarOffers) => {
   });
 };
 
-export {renderElements};
+const resetMainPinMarker = () => {
+  mainPinMarker.setLatLng(L.latLng(MAP_LAT, MAP_LNG));
+};
+
+
+export {renderElements, setDefaultAdress, resetMainPinMarker};

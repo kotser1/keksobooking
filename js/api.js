@@ -1,10 +1,10 @@
-import {showAlert} from './util.js';
+import {showAlert} from './form.js';
 
-
-//setUserFormSubmit(showAlert('OK'));
+const GET_DATA_URL = 'https://22.javascript.pages.academy/keksobooking/data';
+const SEND_DATA_URL = 'https://22.javascript.pages.academy/keksobooking';
 
 const getData = (onSuccess) => {
-  fetch('https://22.javascript.pages.academy/keksobooking/data')
+  fetch(GET_DATA_URL)
     .then((response) => response.json())
     .then((homes) => {
       onSuccess(homes);      // renderElements(homes);
@@ -14,9 +14,8 @@ const getData = (onSuccess) => {
     });
 };
 
-
 const sendData = (onSuccess, onFail, body) => {
-  fetch('https://22.javascript.pages.academy/keksobooking',
+  fetch(SEND_DATA_URL,
     {
       method: 'POST',
       body,

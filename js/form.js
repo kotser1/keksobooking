@@ -1,5 +1,6 @@
 import { sendData } from './api.js';
-import { numDecline, showErrorMessage, showSuccessMessage} from './util.js';
+import { setDefaultAdress, resetMainPinMarker} from './map.js';
+import { numDecline } from './util.js';
 
 const offerForm = document.querySelector('.ad-form');
 const checkinTime = offerForm.querySelector('#timein');
@@ -10,7 +11,10 @@ const capacitySelect = offerForm.querySelector('#capacity');
 const capacityOptions = capacitySelect.querySelectorAll('option');
 const selectRooms = offerForm.querySelector('#room_number');
 const offerTitleInput = offerForm.querySelector('#title');
+const resetButton = offerForm.querySelector('.ad-form__reset');
+const main = document.querySelector('main');
 
+const ALERT_SHOW_TIME = 5000;
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const DEFAULT_MAX_PRICE = 1000000;
@@ -40,10 +44,12 @@ checkoutTime.addEventListener('change', () => {
 
 
 // Валидация цены
-offerType.addEventListener('change', () => {
+const onOfferTypeChange = () => {
   offerPrice.placeholder = DEFAULT_MIN_PRICE[offerType.value];
   offerPrice.min = DEFAULT_MIN_PRICE[offerType.value];
-});
+};
+
+offerType.addEventListener('change', onOfferTypeChange);
 
 offerPrice.addEventListener('input', () => {
   if (offerPrice.value > DEFAULT_MAX_PRICE) {
@@ -100,6 +106,62 @@ validateRooms();
 
 selectRooms.addEventListener('change', onSelectRoomsChange);
 
+// Сообщение об ошибке
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '20px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+}
+
+const closeMessage = (message) => {
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      message.remove();
+    }
+  });
+
+  document.addEventListener('click', () => {
+    message.remove();
+  })
+};
+
+const showSuccessMessage = () => {
+  const successMessageTemplate = document.querySelector('#success').content;
+  const successMessage = successMessageTemplate.querySelector('.success');
+  main.appendChild(successMessage);
+
+  closeMessage(successMessage);
+
+  offerForm.reset();
+  setDefaultAdress();
+  resetMainPinMarker();
+  onOfferTypeChange();
+};
+
+const showErrorMessage = () => {
+  const errorMessageTemplate = document.querySelector('#error').content;
+  const errorMessage = errorMessageTemplate.querySelector('.error');
+  main.appendChild(errorMessage);
+
+  closeMessage(errorMessage);
+};
+
+
 const setUserFormSubmit = () => {
   offerForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -112,4 +174,13 @@ const setUserFormSubmit = () => {
   });
 };
 
-export {setUserFormSubmit};
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+
+  offerForm.reset();
+  setDefaultAdress();
+  resetMainPinMarker();
+  onOfferTypeChange();
+})
+
+export {setUserFormSubmit, showAlert};
