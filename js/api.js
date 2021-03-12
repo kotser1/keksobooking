@@ -7,7 +7,7 @@ const getData = (onSuccess) => {
   fetch(GET_DATA_URL)
     .then((response) => response.json())
     .then((homes) => {
-      onSuccess(homes);      // renderElements(homes);
+      onSuccess(homes);
     })
     .catch(() => {
       showAlert('Не удалось загрузить список объектов. Попробуйте ещё раз');
