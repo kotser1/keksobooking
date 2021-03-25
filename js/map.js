@@ -9,8 +9,8 @@ const MAP_COPYRIGHT = '&copy; <a href="https://www.openstreetmap.org/copyright">
 const MAP_LAT = 35.68034;
 const MAP_LNG = 139.76722;
 const MAP_ZOOM = 9;
-const PIN_SIZE = [50, 50];
-const PIN_ANCHOR = [25, 50];
+const PIN_SIZES = [50, 50];
+const PIN_ANCHOR_SIZES = [25, 50];
 const MAIN_PIN_URL = './img/main-pin.svg';
 const OFFER_PIN_URL = './img/pin.svg';
 const DIGITS_AFTER_COMMA = 5;
@@ -51,8 +51,8 @@ L.tileLayer(TILE_LAYER_URL, {
 
 const mainPinIcon = L.icon({
   iconUrl: MAIN_PIN_URL,
-  iconSize: PIN_SIZE,
-  iconAnchor: PIN_ANCHOR,
+  iconSize: PIN_SIZES,
+  iconAnchor: PIN_ANCHOR_SIZES,
 });
 
 
@@ -95,8 +95,8 @@ const renderElements = (similarOffers) => {
   similarOffers.forEach((item) => {
     const offerPinIcon = L.icon({
       iconUrl: OFFER_PIN_URL,
-      iconSize: PIN_SIZE,
-      iconAnchor: PIN_ANCHOR,
+      iconSize: PIN_SIZES,
+      iconAnchor: PIN_ANCHOR_SIZES,
     });
 
     const marker = L.marker(
