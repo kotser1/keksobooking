@@ -1,21 +1,21 @@
-import {showAlert} from './form.js';
+const Urls = {
+  GET: 'https://22.javascript.pages.academy/keksobooking/data',
+  POST: 'https://22.javascript.pages.academy/keksobooking',
+};
 
-const GET_DATA_URL = 'https://22.javascript.pages.academy/keksobooking/data';
-const SEND_DATA_URL = 'https://22.javascript.pages.academy/keksobooking';
-
-const getData = (onSuccess) => {
-  fetch(GET_DATA_URL)
+const getData = (onSuccess, onFail) => {
+  fetch(Urls.GET)
     .then((response) => response.json())
     .then((homes) => {
       onSuccess(homes);
     })
     .catch(() => {
-      showAlert('Не удалось загрузить список объектов. Попробуйте ещё раз');
+      onFail();
     });
 };
 
 const sendData = (onSuccess, onFail, body) => {
-  fetch(SEND_DATA_URL,
+  fetch(Urls.POST,
     {
       method: 'POST',
       body,
