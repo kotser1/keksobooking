@@ -4,7 +4,8 @@ import {makeElements} from './make-elements.js';
 import {getData} from './api.js';
 import {MAX_OFFERS, filterData} from './filter.js';
 
-
+const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const MAP_COPYRIGHT = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const MAP_LAT = 35.68034;
 const MAP_LNG = 139.76722;
 const MAP_ZOOM = 9;
@@ -14,6 +15,7 @@ const MAIN_PIN_URL = './img/main-pin.svg';
 const OFFER_PIN_URL = './img/pin.svg';
 const DIGITS_AFTER_COMMA = 5;
 const RERENDER_DELAY = 500;
+const ALERT_SHOW_TIME = 5000;
 
 const address = document.querySelector('#address');
 const disabledFields = document.querySelectorAll('select.map__filter, fieldset');
@@ -43,8 +45,8 @@ const map = L.map('map-canvas')
     lng: MAP_LNG,
   }, MAP_ZOOM);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+L.tileLayer(TILE_LAYER_URL, {
+  attribution: MAP_COPYRIGHT,
 }).addTo(map);
 
 const mainPinIcon = L.icon({
@@ -129,7 +131,6 @@ const onSuccess = (data) => {
 }
 
 // Сообщение об ошибке
-const ALERT_SHOW_TIME = 5000;
 const showAlert = () => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
@@ -141,9 +142,7 @@ const showAlert = () => {
   alertContainer.style.fontSize = '20px';
   alertContainer.style.textAlign = 'center';
   alertContainer.style.backgroundColor = 'red';
-
   alertContainer.textContent = 'Не удалось загрузить список объектов. Попробуйте ещё раз';
-
   document.body.append(alertContainer);
 
   setTimeout(() => {
