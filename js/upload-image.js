@@ -37,7 +37,8 @@ photoFileChooser.addEventListener('change', () => {
     const reader = new FileReader();
 
     reader.addEventListener('load', () => {
-      photoPreview.innerHTML = `<img src="${reader.result}" alt="Фото жилья" width="70" height="70">`;
+      const result = `<img src="${reader.result}" alt="Фото жилья" width="70" height="70">`
+      photoPreview.innerHTML = result;
     });
 
     reader.readAsDataURL(file);
