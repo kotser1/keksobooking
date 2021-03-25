@@ -1,4 +1,5 @@
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const DEFAULT_AVATAR = 'img/muffin-grey.svg';
 
 const avatarFileChooser = document.querySelector('#avatar');
 const avatarPreview = document.querySelector('.ad-form-header__preview img');
@@ -42,3 +43,11 @@ photoFileChooser.addEventListener('change', () => {
     reader.readAsDataURL(file);
   }
 });
+
+
+const resetPhotos = () => {
+  avatarPreview.src = DEFAULT_AVATAR;
+  photoPreview.innerHTML = '';
+}
+
+export { resetPhotos };

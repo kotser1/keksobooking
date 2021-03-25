@@ -1,6 +1,7 @@
 import { sendData } from './api.js';
 import { setDefaultAdress, resetMainPinMarker} from './map.js';
 import { numDecline } from './util.js';
+import { resetPhotos } from './upload-image.js';
 
 const offerForm = document.querySelector('.ad-form');
 const checkinTime = offerForm.querySelector('#timein');
@@ -127,6 +128,7 @@ const showSuccessMessage = () => {
   setDefaultAdress();
   resetMainPinMarker();
   onOfferTypeChange();
+  resetPhotos();
 };
 
 const showErrorMessage = () => {
@@ -154,4 +156,5 @@ resetButton.addEventListener('click', (evt) => {
   setDefaultAdress();
   resetMainPinMarker();
   onOfferTypeChange();
+  resetPhotos();
 })
