@@ -1,7 +1,11 @@
 /* global L:readonly */
+/* global _:readonly */
 import {makeElements} from './make-elements.js';
-import {DIGITS_AFTER_COMMA} from './data.js';
+import {getData} from './api.js';
+import {MAX_OFFERS, filterData} from './filter.js';
 
+const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const MAP_COPYRIGHT = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const MAP_LAT = 35.68034;
 const MAP_LNG = 139.76722;
 const MAP_ZOOM = 9;
@@ -9,9 +13,13 @@ const PIN_SIZE = [50, 50];
 const PIN_ANCHOR = [25, 50];
 const MAIN_PIN_URL = './img/main-pin.svg';
 const OFFER_PIN_URL = './img/pin.svg';
+const DIGITS_AFTER_COMMA = 5;
+const RERENDER_DELAY = 500;
+const ALERT_SHOW_TIME = 5000;
 
 const address = document.querySelector('#address');
 const disabledFields = document.querySelectorAll('select.map__filter, fieldset');
+const mapFilters = document.querySelector('.map__filters');
 
 //До загрузки карты форма не активна. Для элементов формы устанавливаем атрибут disabled
 const setDisabledStatus = () => {
@@ -22,7 +30,7 @@ const setDisabledStatus = () => {
 
 const toggleFormStatus = () => {
   document.querySelector('.ad-form').classList.toggle('ad-form--disabled');
-  document.querySelector('.map__filters').classList.toggle('map__filters--disabled');
+  mapFilters.classList.toggle('map__filters--disabled');
   setDisabledStatus();
 };
 
@@ -37,8 +45,8 @@ const map = L.map('map-canvas')
     lng: MAP_LNG,
   }, MAP_ZOOM);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+L.tileLayer(TILE_LAYER_URL, {
+  attribution: MAP_COPYRIGHT,
 }).addTo(map);
 
 const mainPinIcon = L.icon({
@@ -74,6 +82,14 @@ mainPinMarker.on('moveend', (evt) => {
   address.value = evt.target.getLatLng().lat.toFixed(DIGITS_AFTER_COMMA)  + ', ' + evt.target.getLatLng().lng.toFixed(DIGITS_AFTER_COMMA);
 });
 
+
+const layerGroup = L.layerGroup().addTo(map);
+
+const removeElements = () => {
+  layerGroup.clearLayers();
+}
+
+
 const renderElements = (similarOffers) => {
 
   similarOffers.forEach((item) => {
@@ -93,7 +109,7 @@ const renderElements = (similarOffers) => {
       },
     );
 
-    marker.addTo(map).bindPopup(makeElements(item));
+    marker.addTo(layerGroup).bindPopup(makeElements(item));
   });
 };
 
@@ -101,5 +117,40 @@ const resetMainPinMarker = () => {
   mainPinMarker.setLatLng(L.latLng(MAP_LAT, MAP_LNG));
 };
 
+let adverts = [];
 
-export {renderElements, setDefaultAdress, resetMainPinMarker};
+const onMapFiltersChange = _.debounce(() => {
+  removeElements();
+  renderElements(filterData(adverts));
+}, RERENDER_DELAY);
+
+const onSuccess = (data) => {
+  adverts = data.slice();
+  renderElements(adverts.slice(0, MAX_OFFERS));
+  mapFilters.addEventListener('change', onMapFiltersChange);
+}
+
+// Сообщение об ошибке
+const showAlert = () => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '20px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+  alertContainer.textContent = 'Не удалось загрузить список объектов. Попробуйте ещё раз';
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+}
+
+getData(onSuccess, showAlert);
+
+
+export {renderElements, setDefaultAdress, resetMainPinMarker, removeElements};
