@@ -16,8 +16,6 @@ const priceMap = {
   },
 };
 
-const filters = Array.from(document.querySelector('.map__filters').children);
-
 const filterRules = {
   'housing-type': (data, filter) => {
     return filter.value === data.offer.type;
@@ -45,6 +43,9 @@ const filterRules = {
     });
   },
 };
+
+const filters = Array.from(document.querySelector('.map__filters').children);
+
 
 const filterData = (data) => {
   let filteredOffers = [];
