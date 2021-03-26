@@ -147,4 +147,4 @@ const showAlert = () => {
 getData(onSuccess, showAlert);
 
 
-export {renderElements, setDefaultAdress, resetMainPinMarker, removeElements};
+export {renderElements, setDefaultAdress, resetMainPinMarker, removeElements, mapFilters};
