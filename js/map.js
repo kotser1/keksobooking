@@ -21,7 +21,7 @@ const address = document.querySelector('#address');
 const disabledFields = document.querySelectorAll('select.map__filter, fieldset');
 const mapFilters = document.querySelector('.map__filters');
 
-//До загрузки карты форма не активна. Для элементов формы устанавливаем атрибут disabled
+
 const setDisabledStatus = () => {
   disabledFields.forEach((item) => {
     item.disabled = !item.disabled;
@@ -69,15 +69,12 @@ const mainPinMarker = L.marker(
 
 mainPinMarker.addTo(map);
 
-//Устанавливаем значение по умолчанию для поля 'Адрес'
 const setDefaultAdress = () => {
   address.value = MAP_LAT + ', ' + MAP_LNG;
 };
 
 setDefaultAdress();
 
-
-//Передаем текущие координаты маркера в поле 'Адрес'
 mainPinMarker.on('moveend', (evt) => {
   address.value = evt.target.getLatLng().lat.toFixed(DIGITS_AFTER_COMMA)  + ', ' + evt.target.getLatLng().lng.toFixed(DIGITS_AFTER_COMMA);
 });
@@ -89,9 +86,7 @@ const removeElements = () => {
   layerGroup.clearLayers();
 }
 
-
 const renderElements = (similarOffers) => {
-
   similarOffers.forEach((item) => {
     const offerPinIcon = L.icon({
       iconUrl: OFFER_PIN_URL,
@@ -130,14 +125,13 @@ const onSuccess = (data) => {
   mapFilters.addEventListener('change', onMapFiltersChange);
 }
 
-// Сообщение об ошибке
 const showAlert = () => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 100;
+  alertContainer.style.zIndex = '100';
   alertContainer.style.position = 'absolute';
-  alertContainer.style.left = 0;
-  alertContainer.style.top = 0;
-  alertContainer.style.right = 0;
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '0';
+  alertContainer.style.right = '0';
   alertContainer.style.padding = '10px 3px';
   alertContainer.style.fontSize = '20px';
   alertContainer.style.textAlign = 'center';

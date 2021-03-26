@@ -1,3 +1,5 @@
+const ERROR_MESSAGE = 'Не удалось отправить форму. Попробуйте еще раз';
+
 const Urls = {
   GET: 'https://22.javascript.pages.academy/keksobooking/data',
   POST: 'https://22.javascript.pages.academy/keksobooking',
@@ -25,11 +27,11 @@ const sendData = (onSuccess, onFail, body) => {
       if (response.ok) {
         onSuccess();
       } else {
-        onFail('Не удалось отправить форму. Попробуйте еще раз');
+        onFail(ERROR_MESSAGE);
       }
     })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте еще раз');
+      onFail(ERROR_MESSAGE);
     });
 };
 

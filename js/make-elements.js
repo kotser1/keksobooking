@@ -1,14 +1,15 @@
 import { numDecline } from './util.js';
 
-const cardTemplate = document.querySelector('#card').content;
-const popupTemplate = cardTemplate.querySelector('.popup');
-
 const TYPES = {
   palace: 'Дворец',
   flat: 'Квартира',
   house: 'Дом',
   bungalow: 'Бунгало',
 };
+
+const cardTemplate = document.querySelector('#card').content;
+const popupTemplate = cardTemplate.querySelector('.popup');
+
 
 const renderFeatures = (features, container) => {
   let list = container.querySelectorAll('li');
