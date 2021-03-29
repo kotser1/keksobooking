@@ -37,9 +37,6 @@ const toggleFormStatus = () => {
 toggleFormStatus();
 
 const map = L.map('map-canvas')
-  .on('load', () => {
-    toggleFormStatus();
-  })
   .setView({
     lat: MAP_LAT,
     lng: MAP_LNG,
@@ -123,6 +120,7 @@ const onSuccess = (data) => {
   adverts = data.slice();
   renderElements(adverts.slice(0, MAX_OFFERS));
   mapFilters.addEventListener('change', onMapFiltersChange);
+  toggleFormStatus();
 }
 
 const showAlert = () => {
