@@ -119,8 +119,8 @@ const onMapFiltersChange = _.debounce(() => {
 const onSuccess = (data) => {
   adverts = data.slice();
   renderElements(adverts.slice(0, MAX_OFFERS));
-  mapFilters.addEventListener('change', onMapFiltersChange);
   toggleFormStatus();
+  mapFilters.addEventListener('change', onMapFiltersChange);
 }
 
 const showAlert = () => {
@@ -145,4 +145,4 @@ const showAlert = () => {
 getData(onSuccess, showAlert);
 
 
-export {renderElements, setDefaultAdress, resetMainPinMarker, removeElements, mapFilters};
+export {renderElements, setDefaultAdress, resetMainPinMarker, removeElements, onMapFiltersChange, mapFilters};

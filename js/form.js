@@ -1,5 +1,5 @@
 import { sendData } from './api.js';
-import { setDefaultAdress, resetMainPinMarker, mapFilters} from './map.js';
+import { setDefaultAdress, resetMainPinMarker, mapFilters, onMapFiltersChange} from './map.js';
 import { numDecline } from './util.js';
 import { resetPhotos } from './upload-image.js';
 
@@ -127,6 +127,7 @@ const showSuccessMessage = () => {
   document.addEventListener('click', onSuccessMessageClick);
   offerForm.reset();
   mapFilters.reset();
+  onMapFiltersChange();
   setDefaultAdress();
   resetMainPinMarker();
   onOfferTypeChange();
@@ -169,6 +170,7 @@ resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   offerForm.reset();
   mapFilters.reset();
+  onMapFiltersChange();
   setDefaultAdress();
   resetMainPinMarker();
   onOfferTypeChange();
