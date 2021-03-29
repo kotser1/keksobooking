@@ -25,6 +25,8 @@ const renderFeatures = (features, container) => {
 
 const renderPhotos = (photoArray, container) => {
   container.innerHTML = '';
+  const fragment = document.createDocumentFragment();
+
   for (let i = 0; i < photoArray.length; i++) {
     let picture = document.createElement('img');
     picture.classList.add('popup__photo');
@@ -32,8 +34,10 @@ const renderPhotos = (photoArray, container) => {
     picture.width = '45';
     picture.height = '40';
     picture.alt = 'Фотография жилья';
-    container.appendChild(picture);
+    fragment.appendChild(picture);
   }
+
+  container.appendChild(fragment);
 };
 
 
