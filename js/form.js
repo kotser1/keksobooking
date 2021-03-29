@@ -37,6 +37,10 @@ const selectRooms = offerForm.querySelector('#room_number');
 const offerTitleInput = offerForm.querySelector('#title');
 const resetButton = offerForm.querySelector('.ad-form__reset');
 const main = document.querySelector('main');
+const successMessageTemplate = document.querySelector('#success').content;
+const successMessage = successMessageTemplate.querySelector('.success');
+const errorMessageTemplate = document.querySelector('#error').content;
+const errorMessage = errorMessageTemplate.querySelector('.error');
 
 
 checkinTime.addEventListener('change', () => {
@@ -101,23 +105,26 @@ validateRooms();
 selectRooms.addEventListener('change', onSelectRoomsChange);
 
 
-const closeMessage = (message) => {
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === Keys.ESCAPE || evt.key === Keys.ESC) {
-      message.remove();
-    }
-  });
+const onSuccessMessageClick = () => {
+  closeSuccessMessage();
+}
 
-  document.addEventListener('click', () => {
-    message.remove();
-  })
+const onSuccessMessageKeydown = (evt) => {
+  if (evt.key === Keys.ESCAPE || evt.key === Keys.ESC) {
+    closeSuccessMessage();
+  }
+}
+
+const closeSuccessMessage = () => {
+  successMessage.remove();
+  document.removeEventListener('keydown', onSuccessMessageKeydown);
+  document.removeEventListener('click', onSuccessMessageClick);
 };
 
 const showSuccessMessage = () => {
-  const successMessageTemplate = document.querySelector('#success').content;
-  const successMessage = successMessageTemplate.querySelector('.success');
   main.appendChild(successMessage);
-  closeMessage(successMessage);
+  document.addEventListener('keydown', onSuccessMessageKeydown);
+  document.addEventListener('click', onSuccessMessageClick);
   offerForm.reset();
   mapFilters.reset();
   setDefaultAdress();
@@ -126,11 +133,26 @@ const showSuccessMessage = () => {
   resetPhotos();
 };
 
+const onErrorMessageClick = () => {
+  closeErrorMessage();
+}
+
+const onErrorMessageKeydown = (evt) => {
+  if (evt.key === Keys.ESCAPE || evt.key === Keys.ESC) {
+    closeErrorMessage();
+  }
+}
+
+const closeErrorMessage = () => {
+  errorMessage.remove();
+  document.removeEventListener('keydown', onErrorMessageKeydown);
+  document.removeEventListener('click', onErrorMessageClick);
+};
+
 const showErrorMessage = () => {
-  const errorMessageTemplate = document.querySelector('#error').content;
-  const errorMessage = errorMessageTemplate.querySelector('.error');
   main.appendChild(errorMessage);
-  closeMessage(errorMessage);
+  document.addEventListener('keydown', onErrorMessageKeydown);
+  document.addEventListener('click', onErrorMessageClick);
 };
 
 const setUserFormSubmit = () => {
